@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Cadenas</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para los íconos sociales -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+        }
+        #resultado {
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #2d2f33;
+            color: white;
+            padding: 20px 0;
+            width: 100%;
+        }
+        footer .col {
+            margin-bottom: 10px;
+        }
+        footer a {
+            color: #4aa3df;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .footer-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            background-color: #2980b9;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        #pila {
+            border: 2px solid #2980b9;
+            background-color: #ecf0f1;
+        }
+        .social-section {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+        }
+        .social-section a {
+            color: #2980b9;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        .social-section a:hover {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Enunciado del problema -->
+        <div id="enunciado" class="mb-4">
+            <h4 class="text-center mb-3">Descripción del Problema</h4>
+            <p class="lead text-center">
+                Elaborar un programa que permita la simulación computacional de un autómata de pila que reconozca el lenguaje:
+            </p>
+            <p class="lead text-center">
+                \( L = \{a^n w^m w^{-m} d^n \; | \; n,m \geq 0, w = (b+c)^*\} \)
+            </p>
+            <p class="text-center">
+                Se debe incluir animación gráfica de los estados (con indicador \(n\) y \(m\)) y el contenido de la pila. Las cadenas a analizar se deberán poder ingresar mediante una interfaz dispuesta para ello.
+            </p>
+        </div>
+
+        <!-- Título del simulador -->
+        <h2 class="text-center mb-4">Informe Técnico</h2>
+
+    <!-- Barra de navegación por pestañas -->
+
+        <!-- Barra de navegación -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active" id="introduccion-tab" data-bs-toggle="tab" data-bs-target="#introduccion" type="button" role="tab">Introducción</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="marco-teorico-tab" data-bs-toggle="tab" data-bs-target="#marco-teorico" type="button" role="tab">Marco Teórico</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="objetivos-tab" data-bs-toggle="tab" data-bs-target="#objetivos" type="button" role="tab">Objetivos</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="metodologia-tab" data-bs-toggle="tab" data-bs-target="#metodologia" type="button" role="tab">Metodología</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="resultados-tab" data-bs-toggle="tab" data-bs-target="#resultados" type="button" role="tab">Resultados</button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" id="conclusiones-tab" data-bs-toggle="tab" data-bs-target="#conclusiones" type="button" role="tab">Conclusiones</button>
+            </li>
+        </ul>
+
+        <!-- Contenido de las pestañas -->
+        <div class="tab-content mt-4">
+            <!-- Introducción -->
+            <div class="tab-pane fade show active" id="introduccion" role="tabpanel">
+                <h3>Introducción</h3>
+                <p>El presente informe describe la simulación de un autómata de pila capaz de procesar cadenas pertenecientes a un lenguaje específico. Un autómata de pila permite analizar lenguajes que requieren más capacidad de memoria que los autómatas finitos tradicionales.</p>
+            </div>
+
+            <!-- Marco Teórico -->
+            <div class="tab-pane fade" id="marco-teorico" role="tabpanel">
+                <h3>Marco Teórico</h3>
+                <p>En teoría de lenguajes formales, un <strong>autómata de pila</strong> es una máquina abstracta que utiliza una pila para gestionar información adicional mientras procesa una cadena. Formalmente, un autómata de pila puede ser definido como una 7-tupla:</p>
+                <ul>
+                    <li>\( Q \): conjunto finito de estados</li>
+                    <li>\( \Sigma \): alfabeto de entrada</li>
+                    <li>\( \Gamma \): alfabeto de pila</li>
+                    <li>\( q_0 \in Q \): estado inicial</li>
+                    <li>\( Z_0 \in \Gamma \): símbolo inicial de la pila</li>
+                    <li>\( F \subseteq Q \): conjunto de estados de aceptación</li>
+                    <li>\( \delta \): función de transición</li>
+                </ul>
+                <p>La cadena vacía está representada por el símbolo λ (lambda).</p>
+            </div>
+
+            <!-- Objetivos -->
+            <div class="tab-pane fade" id="objetivos" role="tabpanel">
+                <h3>Objetivos</h3>
+                <p>El objetivo general del proyecto es simular un autómata de pila que permita reconocer un lenguaje complejo, visualizando el proceso de aceptación o rechazo de una cadena. A partir de este objetivo general, se derivan los siguientes objetivos específicos:</p>
+                <ul>
+                    <li>Implementar un autómata de pila que simule el reconocimiento del lenguaje \( L = \{a^n w^m w^{-m} d^n \; | \; n,m \geq 0, w = (b+c)^*\} \).</li>
+                    <li>Desarrollar una interfaz gráfica que permita la visualización del contenido de la pila y el estado actual del autómata en cada paso de procesamiento.</li>
+                    <li>Permitir la entrada de cadenas de prueba mediante un formulario interactivo y generar una simulación visual del proceso de aceptación o rechazo.</li>
+                    <li>Incluir animaciones que representen los cambios en los estados y la pila, facilitando la comprensión visual de las transiciones y las operaciones del autómata.</li>
+                </ul>
+            </div>
+
+            <!-- Metodología -->
+            <div class="tab-pane fade" id="metodologia" role="tabpanel">
+                <h3>Metodología</h3>
+                <p>El autómata de pila diseñado sigue un conjunto de producciones que guían su comportamiento para procesar cadenas pertenecientes al lenguaje \( L = \{a^n w^m w^{-m} d^n \; | \; n,m \geq 0, w = (b+c)^*\} \). A continuación se describen las producciones y los pasos que sigue el autómata:</p>
+
+                <h4>Producciones del autómata</h4>
+                <ul>
+                    <li>\( q_0 \rightarrow aZ_0 / q_1 \): Si el autómata lee una 'a' en el estado inicial \( q_0 \), apila 'a' y avanza al estado \( q_1 \).</li>
+                    <li>\( q_1 \rightarrow aA / q_1 \): Si el autómata está en el estado \( q_1 \) y lee una 'a', apila 'a' y se mantiene en el estado \( q_1 \).</li>
+                    <li>\( q_1 \rightarrow b / q_2 \): Si el autómata lee una 'b' en \( q_1 \), avanza al estado \( q_2 \) sin modificar la pila.</li>
+                    <li>\( q_2 \rightarrow b / q_2 \): Si el autómata lee más 'b' o 'c' en \( q_2 \), sigue en el estado \( q_2 \) sin modificar la pila.</li>
+                    <li>\( q_2 \rightarrow c / q_2 \): Si el autómata lee una 'c', sigue en el estado \( q_2 \) sin modificar la pila.</li>
+                    <li>\( q_2 \rightarrow w^{-1} / q_3 \): Si el autómata detecta el fin de la palabra \( w \), avanza al estado \( q_3 \).</li>
+                    <li>\( q_3 \rightarrow d / q_4 \): Si el autómata lee una 'd' y se vacía la pila, acepta la cadena.</li>
+                </ul>
+
+                <h4>Pasos para la aceptación de una cadena</h4>
+                <ol>
+                    <li>El autómata comienza en el estado \( q_0 \) con la pila vacía.</li>
+                    <li>Al leer una secuencia de 'a', el autómata apila cada 'a' y avanza al estado \( q_1 \).</li>
+                    <li>Cuando se encuentra con una palabra \( w \) compuesta de 'b' y/o 'c', el autómata avanza al estado \( q_2 \), donde reconoce la palabra sin modificar la pila.</li>
+                    <li>Una vez que el autómata detecta el final de la palabra \( w \) y comienza a procesar \( w^{-1} \), avanza al estado \( q_3 \) y empieza a desapilar cada símbolo 'a'.</li>
+                    <li>Finalmente, al encontrar una secuencia de 'd' equivalente al número de 'a' desapilados, el autómata llega al estado \( q_4 \) y acepta la cadena si la pila está vacía.</li>
+                </ol>
+            </div>
+
+            <!-- Resultados -->
+            <div class="tab-pane fade" id="resultados" role="tabpanel">
+                <h3>Resultados</h3>
+                <p>Los resultados preliminares muestran que el autómata diseñado es capaz de reconocer cadenas válidas pertenecientes al lenguaje especificado, siguiendo las producciones y transiciones detalladas en la metodología. La interfaz gráfica permite observar en tiempo real cómo los cambios en la pila y los estados reflejan el comportamiento del autómata.</p>
+<div class="card p-4 shadow-sm">
+                        
+                        <p class="card-text">En la simulación, se muestra paso a paso el proceso de aceptación o rechazo de la cadena. Cada símbolo es evaluado y la pila se modifica en consecuencia. Se pueden observar los siguientes resultados:</p>
+                        <ul>
+                            <li>Cadena 'aaabcbcbddd' es aceptada (m = 0, n = 3).</li>
+                            <li>Cadena 'aabccbdd' es aceptada (m = 1, n = 2).</li>
+                            <li>Cadena 'aaaddd' es aceptada (m = 0, n = 3).</li>
+                            <li>Cadena 'aabbd' rechazada.</li>
+                            <li>Cadena 'aaa' rechazada.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conclusiones -->
+            <div class="tab-pane fade" id="conclusiones" role="tabpanel">
+                <h3>Conclusiones</h3>
+                <p>Se ha desarrollado un autómata de pila capaz de procesar un lenguaje complejo con un comportamiento estructurado y visualmente representado en una interfaz gráfica. La simulación permite una comprensión clara del proceso de aceptación de cadenas y ofrece una herramienta útil para el análisis de lenguajes formales.</p>
+            </div>
+        </div>
+    </div>
+<!-- Botón para ir al simulador -->
+        <div class="text-center mt-4">
+            <a href="index.html" class="btn btn-custom">Ir al Simulador</a>
+        </div>
+<!-- Redes Sociales -->
+    <section class="social-section text-center">
+        <div class="container">
+            <h5>Conéctate con nosotros en redes sociales:</h5>
+            <div class="d-flex justify-content-center mt-3">
+                <a href="https://www.facebook.com/josealfredo.martinezvaldes" target="_blank" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://x.com/jamartinezv1" target="_blank" aria-label="X (antes Twitter)">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/josealfredomartinezvaldes/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/jose-alfredo-martinez-valdes-60253134/" target="_blank" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://wa.me/+573017690703" target="_blank" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://github.com/jamartinezv2020/" target="_blank" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <!-- Información del Autor -->
+                <div class="col-md-4">
+                    <p class="footer-title">Información del Autor</p>
+                    <p>José Alfredo Martínez Valdés</p>
+                    <p>E-mail: <a href="mailto:jose.martinez7@udea.edu.co">jose.martinez7@udea.edu.co</a></p>
+                    <p>Teléfono: +573017690703</p>
+                </div>
+
+                <!-- Institución -->
+                <div class="col-md-4">
+                    <p class="footer-title">Institución</p>
+                    <p>Universidad de Antioquia</p>
+                    <p>Ingeniería de Sistemas</p>
+                    <p>Teoría de Lenguajes y Laboratorio</p>
+                </div>
+
+                <!-- Año y Profesor -->
+                <div class="col-md-4">
+                    <p class="footer-title">Medellín, Colombia</p>
+                    <p>2024</p>
+                    <p>Profesor: Rubén Darío Ángel Correa</p>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="row text-center mt-4">
+                <div class="col">
+                    <p>&copy; 2024 José Alfredo Martínez Valdés. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

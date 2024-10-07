@@ -1,0 +1,8 @@
+Con AutomataPila1.js , no se aceptan las cadenas como las siguientes
+ad
+bccb
+Porque se ha desarrollado asumiendo m, n >0
+
+Para incluir cadenas don de m,n > = 0
+Se desarrollo el AutomataPila.js
+
